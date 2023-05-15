@@ -1,3 +1,6 @@
+from dataclasses import dataclass
+
+@dataclass
 class Product:
     """
     Класс продукта
@@ -6,12 +9,6 @@ class Product:
     price: float
     description: str
     quantity: int
-
-    def __init__(self, name, price, description, quantity):
-        self.name = name
-        self.price = price
-        self.description = description
-        self.quantity = quantity
 
     def check_quantity(self, quantity) -> bool:
         if quantity <= self.quantity:
@@ -29,7 +26,7 @@ class Product:
         if not self.check_quantity(quantity):
             raise ValueError
         else:
-            self.quantity -= 1
+            self.quantity -= quantity
         """
         TODO реализуйте метод покупки
             Проверьте количество продукта используя метод check_quantity
@@ -91,12 +88,11 @@ class Cart:
         #raise NotImplementedError
 
     def buy(self):
-        #products: dict[Product, int]
         for product, quant in self.products.items():
-            if quant > Product.quantity:
+            if quant > product.quantity:
                 raise ValueError
             for i in range(quant):
-                product.buy()
+                product.buy(quant)
 
         """
         Метод покупки.
